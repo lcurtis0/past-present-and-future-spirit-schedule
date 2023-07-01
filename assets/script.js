@@ -90,9 +90,9 @@ $('#currentTime').text(time);
 
 function setTime(){
 
-    var measureHour = dayjs().get('hour');
-    console.log("The current hour is" + measureHour);
-/*
+    var measureHour = dayjs().format('hh');
+    console.log("The current hour is " + measureHour +":00");
+
     var hour9 = $('#hour-9');
     var hour10 = $('#hour-10');
     var hour11 = $('#hour-11');
@@ -102,9 +102,54 @@ function setTime(){
     var hour3 = $('#hour-3');
     var hour4 = $('#hour-4');
     var hour5 = $('#hour-5');
-*/
 
-    var timeblock = $('.time-block');
+    console.log("This is the value at 9 "+ hour9);
+
+    var timeBlock = $('.time-block');
+
+   // const timeArray = [hour9, hour10, hour11, hour12, hour1, hour2, hour3, hour4, hour5];
+    const assignHour = '{"hour9":9, "hour10":10, "hour11":11, "hour12":12, "hour1":1, "hour2":2}'
+    const objHour = JSON.parse(assignHour);
+    console.log(assignHour[5]);
+    assignHour.hour.forEach(timeBlock =>{
+        if (objHour > currentHour){
+            timeBlock.classList.removeClass('.present');
+            timeBlock.classList.removeClass('.future');
+            timeBlock.classList.addClass('past');
+        } else if (objHour === currentHour){
+            timeBlock.classList.removeClass('.past');
+            timeBlock.classList.removeClass('.future');
+            timeBlock.classList.addClass('present');
+        } else if (objHour < currentHour ){
+            timeBlock.classList.removeClass('.past');
+            timeBlock.classList.removeClass('.present');
+            timeBlock.classList.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
+        }
+    }); // timeCheck is a function that will be played out for each class hour
+
+    /*
+          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
+          If blockHour is less than currentHour then
+              Remove classes 'future' and 'present' from block
+              Add class 'past' to block
+          Else If blockHour is equal to currentHour then
+              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
+              Remove classes 'future' and 'past' from block
+              Add class 'present' to block
+          Else
+              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
+              Remove classes 'present' and 'past' from block
+              Add class 'future' to block
+          End if
+
+          */
+
+
+    //   const txt = '{"name":"John", "age":30, "city":"New York"}'
+//const obj = JSON.parse(txt);
+//console.log(obj[1]);
+//obj.name + ", " + obj.age;
+/*
 
     $(document).ready(function(){
         $('.time-block').timepicker({
@@ -113,42 +158,64 @@ function setTime(){
         });
     });
 
-    for (i =0; i < 12; i++){
-
-    if (measureHour === i){
-        timeblock.removeClass(".past");
-        timeblock.addClass(".present");
-    } else if (measureHour > i){
-        timeblock.removeClass(".past");
-        timeblock.addClass(".future");
-    } else {
-        timeblock.addClass(".past");
-    }
-
-    }
-
-
-/*
-    function changeBlue(event) {
-        // event.stopPropagation();
-        event.currentTarget.setAttribute(
-          "style",
-          "background-color: blue"
-        );
-      }
 */
 
 
-    //Perhaps to add an array would be one plan of attack
-
    
 } 
-    setInterval (setTime, 120000);
+    setInterval (setTime, 15000);
 
+/*
+    Algorithm setTime()
+  
+    Begin
+      // Get the current hour using a date library
+      Set currentHour to current hour of the day
+  
+      Display "The current hour is" followed by the value of currentHour
+  
+      // For each element with class 'time-block'
+      For each 'time-block' element as block do
+  
+          // Get the hour value from the element's ID,
+           assuming it's the second part when splitting by '-'
 
+          Set blockHour to the second part of the block's ID after splitting by '-'
+  
+          // Parse blockHour to an integer
+          Convert blockHour to an integer
+  
+          // Convert blockHour to 24-hour format if it's less than 9
+          If blockHour is less than 9 then
+              Add 12 to blockHour
+          End if
+  
+          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
+          If blockHour is less than currentHour then
+              Remove classes 'future' and 'present' from block
+              Add class 'past' to block
+          Else If blockHour is equal to currentHour then
+              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
+              Remove classes 'future' and 'past' from block
+              Add class 'present' to block
+          Else
+              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
+              Remove classes 'present' and 'past' from block
+              Add class 'future' to block
+          End if
+  
+      End for
+  
+    End
+    
+    // Run setTime every minute
+    Repeat setTime every 60 seconds
+  
+  End Algorithm
 
+  Note that this code assumes that you're using a 24-hour clock, where hours go from 0 (midnight) to 23. This is the default for JavaScript's Date object, as well as for dayjs. It also assumes that your hour blocks start from 9 AM and go to 5 PM, in which case you would need to convert the block hour to a 24-hour format.
 
-     
+     */
 
 
     // TODO: Add code to get any user input that was saved in localStorage and set
