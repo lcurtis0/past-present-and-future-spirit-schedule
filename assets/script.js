@@ -90,8 +90,8 @@ $('#currentTime').text(time);
 
 function setTime(){
 
-    var measureHour = dayjs().format('hh:mm:ss');
-    console.log("The current hour is" + measureHour.dayjs.format);
+    var measureHour = dayjs().get('hour');
+    console.log("The current hour is" + measureHour);
 /*
     var hour9 = $('#hour-9');
     var hour10 = $('#hour-10');
@@ -106,15 +106,22 @@ function setTime(){
 
     var timeblock = $('.time-block');
 
+    $(document).ready(function(){
+        $('.time-block').timepicker({
+
+
+        });
+    });
+
     for (i =0; i < 12; i++){
 
     if (measureHour === i){
         timeblock.removeClass(".past");
         timeblock.addClass(".present");
-    }else if (measureHour > i){
+    } else if (measureHour > i){
         timeblock.removeClass(".past");
         timeblock.addClass(".future");
-    }else {
+    } else {
         timeblock.addClass(".past");
     }
 
