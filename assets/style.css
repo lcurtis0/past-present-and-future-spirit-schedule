@@ -17,7 +17,7 @@ body {
   }
   
   .time-block {
-    border-radius: 15px;
+    border-radius: 10px;
   }
   
   .row {
@@ -66,3 +66,5 @@ body {
   implement the class via Jquery. 
   The J query will know each hour by knowing the current hour on a clock
   
+*/
+
