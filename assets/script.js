@@ -90,7 +90,8 @@ $('#currentTime').text(time);
 
 function setTime(){
 
-    var measureHour = dayjs().format('hh');
+    var measureHour = dayjs().format('H');
+    var  measureHour = 10;
     console.log("The current hour is " + measureHour +":00");
 
     var hour9 = $('#hour-9');
@@ -103,67 +104,77 @@ function setTime(){
     var hour4 = $('#hour-4');
     var hour5 = $('#hour-5');
 
-    console.log("This is the value at 9 "+ hour9);
-
     var timeBlock = $('.time-block');
 
    // const timeArray = [hour9, hour10, hour11, hour12, hour1, hour2, hour3, hour4, hour5];
-    const assignHour = '{"hour9":9, "hour10":10, "hour11":11, "hour12":12, "hour1":1, "hour2":2}'
+ /*   const assignHour =[time:{
+        "hour9":9,
+     "hour10":10,
+      "hour11":11,
+       "hour12":12,
+        "hour1":1,
+         "hour2":2,
+          "hour3":3}]
     const objHour = JSON.parse(assignHour);
-    console.log(assignHour[5]);
-    assignHour.hour.forEach(timeBlock =>{
-        if (objHour > currentHour){
-            timeBlock.classList.removeClass('.present');
-            timeBlock.classList.removeClass('.future');
-            timeBlock.classList.addClass('past');
-        } else if (objHour === currentHour){
-            timeBlock.classList.removeClass('.past');
-            timeBlock.classList.removeClass('.future');
-            timeBlock.classList.addClass('present');
-        } else if (objHour < currentHour ){
-            timeBlock.classList.removeClass('.past');
-            timeBlock.classList.removeClass('.present');
-            timeBlock.classList.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
-        }
-    }); // timeCheck is a function that will be played out for each class hour
+    console.log(assignHour[0]);   
 
-    /*
-          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
-          If blockHour is less than currentHour then
-              Remove classes 'future' and 'present' from block
-              Add class 'past' to block
-          Else If blockHour is equal to currentHour then
-              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
-              Remove classes 'future' and 'past' from block
-              Add class 'present' to block
-          Else
-              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
-              Remove classes 'present' and 'past' from block
-              Add class 'future' to block
-          End if
-
-          */
-
-
-    //   const txt = '{"name":"John", "age":30, "city":"New York"}'
-//const obj = JSON.parse(txt);
-//console.log(obj[1]);
-//obj.name + ", " + obj.age;
-/*
-
-    $(document).ready(function(){
-        $('.time-block').timepicker({
-
-
-        });
-    });
-
+    1. Why are you getting object object?
+2. Double check your syntax for classlist
+3. Restructure your for each
+4. Convert to 24 hour time
+To test this, set measure to 10 (edited) 
 */
 
+console.log(timeBlock);
+timeBlock.each(function() {
+//console.log($(this));
+ var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
+ var arrayTime = blockHour[1];
+// console.log(arrayTime, blockHour);
+var intTimeHour = parseInt(arrayTime);
+console.log(intTimeHour, measureHour);
 
-   
-} 
-    setInterval (setTime, 15000);
+if (intTimeHour > measureHour){
+    $(this).removeClass('present');
+    $(this).removeClass('future');
+    $(this).addClass('past');
+ } else if (intTimeHour === measureHour){
+    $(this).removeClass('past');
+    $(this).removeClass('future');
+    $(this).addClass('present');
+ } else if (intTimeHour < measureHour ){
+    $(this).removeClass('past');
+    $(this).removeClass('present');
+    $(this).addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
+ }
+});
+
+}
+setInterval (setTime, 10000);
+ /*
+});
+    for (i=9; i <= 17; i++){
+        console.log(i, timeBlock);
+        if (i > measureHour){
+           timeBlock.removeClass('present');
+            timeBlock.removeClass('future');
+            timeBlock.addClass('past');
+        } else if (i === measureHour){
+            timeBlock.removeClass('past');
+            timeBlock.removeClass('future');
+            timeBlock.addClass('present');
+        } else if (i < measureHour ){
+            timeBlock.removeClass('past');
+            timeBlock.removeClass('present');
+            timeBlock.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
+        }
+        */
+    
+
+
+
+ // timeCheck is a function that will be played out for each class hour
+
 
 /*
     Algorithm setTime()
