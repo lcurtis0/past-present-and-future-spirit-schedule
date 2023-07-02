@@ -1,15 +1,28 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-//$(function () {
+// $(function () {
 
     // TODO: Add a listener for click events on the save button. 
     //This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
     
+    var userInput = [
+        {
+            hour: "9"
+        }
+    ]
+
+    var formEl = $('#pizza-form');
+var firstNameEl = $('input[name="first-name"]');
+var lastNameEl = $('input[name="last-name"]');
+var emailEl = $('input[name="email"]');
+var githubEl = $('input[name="github"]');
+
     //HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
+    // function? 
+    // How can DOM traversal be used to get the "hour-x" id of the
     // time-block containing the button that was clicked? How might the id be
     // useful when saving the description in local storage?
 
@@ -80,6 +93,9 @@ $('#currentDay').text(weekDay);
 var time = dayjs().format('hh:mm:ss');
 $('#currentTime').text(time);
 
+var meridiem = dayjs().format('A');
+$('#meridiem').text(meridiem);
+
 }
  setInterval (displayClock, 1000);
 
@@ -90,59 +106,29 @@ $('#currentTime').text(time);
 
 function setTime(){
 
-    var measureHour = dayjs().format('H');
-    var  measureHour = 10;
+    var measureHour = dayjs().format('HH');
     console.log("The current hour is " + measureHour +":00");
-
-    var hour9 = $('#hour-9');
-    var hour10 = $('#hour-10');
-    var hour11 = $('#hour-11');
-    var hour12 = $('#hour-12');
-    var hour1 = $('#hour-1');
-    var hour2 = $('#hour-2');
-    var hour3 = $('#hour-3');
-    var hour4 = $('#hour-4');
-    var hour5 = $('#hour-5');
 
     var timeBlock = $('.time-block');
 
-   // const timeArray = [hour9, hour10, hour11, hour12, hour1, hour2, hour3, hour4, hour5];
- /*   const assignHour =[time:{
-        "hour9":9,
-     "hour10":10,
-      "hour11":11,
-       "hour12":12,
-        "hour1":1,
-         "hour2":2,
-          "hour3":3}]
-    const objHour = JSON.parse(assignHour);
-    console.log(assignHour[0]);   
-
-    1. Why are you getting object object?
-2. Double check your syntax for classlist
-3. Restructure your for each
-4. Convert to 24 hour time
-To test this, set measure to 10 (edited) 
-*/
-
 console.log(timeBlock);
-timeBlock.each(function() {
+timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
 //console.log($(this));
  var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
- var arrayTime = blockHour[1];
+ var arrayTime = blockHour[1]; //grabs the first index of the array
 // console.log(arrayTime, blockHour);
-var intTimeHour = parseInt(arrayTime);
+var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
 console.log(intTimeHour, measureHour);
 
-if (intTimeHour > measureHour){
-    $(this).removeClass('present');
+if (intTimeHour < measureHour){ // intTimerHour represntes the index of each number in the id and compares it. Since were using the the 24 hour clock it roates through out the day
+    $(this).removeClass('present');// The "this" grabs the whole div not just the class
     $(this).removeClass('future');
     $(this).addClass('past');
  } else if (intTimeHour === measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
- } else if (intTimeHour < measureHour ){
+ } else if (intTimeHour > measureHour ){
     $(this).removeClass('past');
     $(this).removeClass('present');
     $(this).addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
@@ -150,8 +136,14 @@ if (intTimeHour > measureHour){
 });
 
 }
-setInterval (setTime, 10000);
+setInterval (setTime, 150000);
+
  /*
+https://blog.logrocket.com/localstorage-javascript-complete-guide/
+https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
+https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+https://www.youtube.com/@WebDevSimplified
+
 });
     for (i=9; i <= 17; i++){
         console.log(i, timeBlock);
