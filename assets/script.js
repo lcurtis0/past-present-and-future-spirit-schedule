@@ -1,64 +1,100 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-//$(function () {
+// $(function () {
 
     // TODO: Add a listener for click events on the save button. 
     //This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
+
+    //$('saveBtn').on("click", function(){
+
+
+   var userInfo =[
+    {
+        id:"1",
+        hourID:"9",
+        time: "9",
+        textarea:""
+    },
+    {
+        id:"2",
+        hourID:"10",
+        time: "10",
+        textarea:""
+    },
+    {
+        id:"3",
+        hourID:"11",
+        time: "11",
+        textarea:""
+    },
+    {
+        id:"4",
+        hourID:"12",
+        time: "12",
+        textarea:""
+    },
+    {
+        id:"5",
+        hourID:"1",
+        time: "13",
+        textarea:""
+    },
+    {
+        id:"6",
+        hourID:"2",
+        time: "14",
+        textarea:""
+    },
+    {
+        id:"7",
+        hourID:"3",
+        time: "15",
+        textarea:""
+    },
+    {        
+        id:"8",
+        hourID:"4",
+        time: "16",
+        textarea:""
+    },
+    {
+        id:"9",
+        hourID:"5",
+        time: "17",
+        textarea:""
+    }
     
+   ]
+
+   function trackingHour() {
+    localStorage.setItem("What-user-wrote", JSON.stringify(userInfo.textarea));
+    localStorage.setItem("24-hour-time", JSON.parseInt(userInfo.time) );
+    localStorage.setItem("ID", JSON.parseInt(userInfo.id) );
+    } setInterval (trackingHour,15000);
+
+    function gettingHourInfo() {
+        localStorage.getItem("What-user-wrote");
+        localStorage.getItem("24-hour-time");
+        localStorage.getItem("ID");
+    }
+
+
+//});
+   //May consider clearing local storage using localtorage.clear
+
     //HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
+    // function? -D
+
+    // How can DOM traversal be used to get the "hour-x" id of the
+    // time-block containing the button that was clicked?  -D
+    
+    //How might the id be
     // useful when saving the description in local storage?
 
-    /*
-
-    var saveBtn = $('.saveBtn');
-
-    saveBtn.addEventListener("click", )
-
-    function keyInput () 
-var textInput = $('.content');
-
-*/
-
-/*
-var formEl = $('#pizza-form');
-var firstNameEl = $('input[name="first-name"]');
-var lastNameEl = $('input[name="last-name"]');
-var emailEl = $('input[name="email"]');
-var githubEl = $('input[name="github"]');
-
-function handleFormSubmit(event) {
-  // Prevent the default behavior
-  event.preventDefault();
-
-  console.log('First Name:', firstNameEl.val());
-  console.log('Last Name:', lastNameEl.val());
-  console.log('Email:', emailEl.val());
-  console.log('GitHub:', githubEl.val());
-
-  // Select all checked options
-  var checkedEl = $('input:checked');
-  var selected = [];
-
-  // Loop through checked options to store in array
-  $.each(checkedEl, function () {
-    selected.push($(this).val());
-  });
-  console.log('Toppings: ', selected.join(', '));
-
-  // Clear input fields
-  $('input[type="text"]').val('');
-  $('input[type="email"]').val('');
-  $('input[type="checkbox"]').prop('checked', false);
-}
-
-// Submit event on the form
-formEl.on('submit', handleFormSubmit);
-*/
+//});
 
     // TODO: Add code to apply the past, present, or future class to each time
     // block by comparing the id to the current hour. 
@@ -68,6 +104,17 @@ formEl.on('submit', handleFormSubmit);
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
     
+
+
+
+
+
+
+
+
+
+
+
 
 function displayClock(){
 
@@ -80,6 +127,9 @@ $('#currentDay').text(weekDay);
 var time = dayjs().format('hh:mm:ss');
 $('#currentTime').text(time);
 
+var meridiem = dayjs().format('A');
+$('#meridiem').text(meridiem);
+
 }
  setInterval (displayClock, 1000);
 
@@ -90,80 +140,67 @@ $('#currentTime').text(time);
 
 function setTime(){
 
-    var measureHour = dayjs().format('hh');
+    var measureHour = dayjs().format('HH');
     console.log("The current hour is " + measureHour +":00");
-
-    var hour9 = $('#hour-9');
-    var hour10 = $('#hour-10');
-    var hour11 = $('#hour-11');
-    var hour12 = $('#hour-12');
-    var hour1 = $('#hour-1');
-    var hour2 = $('#hour-2');
-    var hour3 = $('#hour-3');
-    var hour4 = $('#hour-4');
-    var hour5 = $('#hour-5');
-
-    console.log("This is the value at 9 "+ hour9);
 
     var timeBlock = $('.time-block');
 
-   // const timeArray = [hour9, hour10, hour11, hour12, hour1, hour2, hour3, hour4, hour5];
-    const assignHour = '{"hour9":9, "hour10":10, "hour11":11, "hour12":12, "hour1":1, "hour2":2}'
-    const objHour = JSON.parse(assignHour);
-    console.log(assignHour[5]);
-    assignHour.hour.forEach(timeBlock =>{
-        if (objHour > currentHour){
-            timeBlock.classList.removeClass('.present');
-            timeBlock.classList.removeClass('.future');
-            timeBlock.classList.addClass('past');
-        } else if (objHour === currentHour){
-            timeBlock.classList.removeClass('.past');
-            timeBlock.classList.removeClass('.future');
-            timeBlock.classList.addClass('present');
-        } else if (objHour < currentHour ){
-            timeBlock.classList.removeClass('.past');
-            timeBlock.classList.removeClass('.present');
-            timeBlock.classList.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
+console.log(timeBlock);
+timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
+//console.log($(this));
+ var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
+ var arrayTime = blockHour[1]; //grabs the first index of the array
+// console.log(arrayTime, blockHour);
+var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
+//console.log(intTimeHour, measureHour);
+
+if (intTimeHour < measureHour){ // intTimerHour represntes the index of each number in the id and compares it. Since were using the the 24 hour clock it roates through out the day
+    $(this).removeClass('present');// The "this" grabs the whole div not just the class
+    $(this).removeClass('future');
+    $(this).addClass('past');
+ } else if (intTimeHour === measureHour){
+    $(this).removeClass('past');
+    $(this).removeClass('future');
+    $(this).addClass('present');
+ } else if (intTimeHour > measureHour ){
+    $(this).removeClass('past');
+    $(this).removeClass('present');
+    $(this).addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
+ }
+});
+
+}
+setInterval (setTime, 150000);
+
+ /*
+https://blog.logrocket.com/localstorage-javascript-complete-guide/
+https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
+https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
+https://www.youtube.com/@WebDevSimplified
+
+});
+    for (i=9; i <= 17; i++){
+        console.log(i, timeBlock);
+        if (i > measureHour){
+           timeBlock.removeClass('present');
+            timeBlock.removeClass('future');
+            timeBlock.addClass('past');
+        } else if (i === measureHour){
+            timeBlock.removeClass('past');
+            timeBlock.removeClass('future');
+            timeBlock.addClass('present');
+        } else if (i < measureHour ){
+            timeBlock.removeClass('past');
+            timeBlock.removeClass('present');
+            timeBlock.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
         }
-    }); // timeCheck is a function that will be played out for each class hour
-
-    /*
-          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
-          If blockHour is less than currentHour then
-              Remove classes 'future' and 'present' from block
-              Add class 'past' to block
-          Else If blockHour is equal to currentHour then
-              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
-              Remove classes 'future' and 'past' from block
-              Add class 'present' to block
-          Else
-              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
-              Remove classes 'present' and 'past' from block
-              Add class 'future' to block
-          End if
-
-          */
+        */
+    
 
 
-    //   const txt = '{"name":"John", "age":30, "city":"New York"}'
-//const obj = JSON.parse(txt);
-//console.log(obj[1]);
-//obj.name + ", " + obj.age;
-/*
 
-    $(document).ready(function(){
-        $('.time-block').timepicker({
+ // timeCheck is a function that will be played out for each class hour
 
-
-        });
-    });
-
-*/
-
-
-   
-} 
-    setInterval (setTime, 15000);
 
 /*
     Algorithm setTime()
@@ -224,3 +261,33 @@ function setTime(){
     //
     // TODO: Add code to display the current date in the header of the page.
  // });
+
+ var timeBlock = $('.time-block');
+
+ timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
+   //console.log($(this));
+    var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
+    var arrayTime = blockHour[1]; //grabs the first index of the array
+   // console.log(arrayTime, blockHour);
+   var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
+   //console.log(intTimeHour, measureHour);
+   console.log(intTimeHour);
+
+  localStorage.setItem('userInput', JSON.stringify({
+
+    
+
+  })
+  );
+
+})
+
+
+  var textByUser = $('textarea[class="description1"]');
+  console.log('First Name:', textByUser.val());
+  console.log("This is a text to see if text works :" + textByUser);
+  $('saveBtn').on("click", function(){
+
+      console.log("Hello");
+     // localstorage.setItem('reminder', JSON.stringify({ "text": }))
+  });
