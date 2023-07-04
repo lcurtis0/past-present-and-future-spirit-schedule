@@ -8,78 +8,38 @@
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
 
-    //$('saveBtn').on("click", function(){
+    $('saveBtn').on("click", function(){
 
+    $(function() {
+        // Add a click event listener to the save button
+        $('.saveBtn').on('click', function() {
+          // Get the ID of the parent time-block
+          var hourID = $(this).closest('.time-block').attr('id'); // the closest method 
+          // Get the user input from the textarea
+          var textarea = $(this).siblings('textarea').val();
+          // Save the user input in local storage using the hourID as the key
+          localStorage.setItem(hourID, textarea);
+        });
+      
+        // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
 
-   var userInfo =[
-    {
-        id:"1",
-        hourID:"9",
-        time: "9",
-        textarea:""
-    },
-    {
-        id:"2",
-        hourID:"10",
-        time: "10",
-        textarea:""
-    },
-    {
-        id:"3",
-        hourID:"11",
-        time: "11",
-        textarea:""
-    },
-    {
-        id:"4",
-        hourID:"12",
-        time: "12",
-        textarea:""
-    },
-    {
-        id:"5",
-        hourID:"1",
-        time: "13",
-        textarea:""
-    },
-    {
-        id:"6",
-        hourID:"2",
-        time: "14",
-        textarea:""
-    },
-    {
-        id:"7",
-        hourID:"3",
-        time: "15",
-        textarea:""
-    },
-    {        
-        id:"8",
-        hourID:"4",
-        time: "16",
-        textarea:""
-    },
-    {
-        id:"9",
-        hourID:"5",
-        time: "17",
-        textarea:""
-    }
-    
-   ]
+        $('').on("click", function(){
 
-   function trackingHour() {
-    localStorage.setItem("What-user-wrote", JSON.stringify(userInfo.textarea));
-    localStorage.setItem("24-hour-time", JSON.parseInt(userInfo.time) );
-    localStorage.setItem("ID", JSON.parseInt(userInfo.id) );
-    } setInterval (trackingHour,15000);
+        $('.time-block').each(function() {
+          var hourID = $(this).attr('id');
+          var textarea = localStorage.getItem(hourID);
+          if (textarea) {
+            $(this).find('textarea').val(textarea);
+            var showReminder = ("<p>");
+            showReminder.append('reminderText').text("" + textarea);
+            showReminder.text("" + textarea);
+          }
+        });
+      
+        // Rest of your code...
+      });
 
-    function gettingHourInfo() {
-        localStorage.getItem("What-user-wrote");
-        localStorage.getItem("24-hour-time");
-        localStorage.getItem("ID");
-    }
+    })
 
 
 //});
@@ -103,18 +63,6 @@
     // attribute of each time-block be used to conditionally add or remove the
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
-    
-
-
-
-
-
-
-
-
-
-
-
 
 function displayClock(){
 
@@ -155,7 +103,7 @@ var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
 //console.log(intTimeHour, measureHour);
 
 if (intTimeHour < measureHour){ // intTimerHour represntes the index of each number in the id and compares it. Since were using the the 24 hour clock it roates through out the day
-    $(this).removeClass('present');// The "this" grabs the whole div not just the class
+    $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
  } else if (intTimeHour === measureHour){
@@ -281,13 +229,3 @@ https://www.youtube.com/@WebDevSimplified
   );
 
 })
-
-
-  var textByUser = $('textarea[class="description1"]');
-  console.log('First Name:', textByUser.val());
-  console.log("This is a text to see if text works :" + textByUser);
-  $('saveBtn').on("click", function(){
-
-      console.log("Hello");
-     // localstorage.setItem('reminder', JSON.stringify({ "text": }))
-  });
