@@ -40,12 +40,9 @@
            // Add a click event listener to the save button
            $('.saveBtn').on('click', function() {
             // Get the ID of the parent time-block
-            var hourTimeID = $(this).parent('time-block').attr('id').replace(/hour-/,'');
-            console.log(hourTimeID);
-            var hourID = JSON.stringify(hourTimeID);
+            var hourID = $(this).parent('.time-block').attr('id');
             // Get the user input from the textarea
-            var textareaFound = $(this).siblings('textarea').val();
-            var textarea = JSON.stringify(textareaFound);
+            var textarea = $(this).siblings('textarea').val();
             // Save the user input in local storage using the hourID as the key
             localStorage.setItem(hourID, textarea);
             console.log(hourID);
@@ -59,15 +56,16 @@
        $('.time-block').each(function() {
             var hourID = $(this).attr('id');
             var textarea = localStorage.getItem(hourID);
+            console.log(hourID);
   
            
             if (textarea) {
-             var findText = $(this).find('textarea').val(hourID);
-             console.log(findText);
-            /* $('lastReminder').on("click", function(){ 
+             $(this).find('textarea').val(textarea);
+            
+            $('lastReminder').on("click", function(){ 
               var showReminder = ('reminderText');
               showReminder.text("This is the latest reminder made :" + findText + ". made at " + hourID);
-              }); */
+              }); 
             }
           });
 
@@ -116,7 +114,6 @@ $('#meridiem').text(meridiem);
 
 
 function setTime(){
-
     var measureHour = dayjs().format('HH');
     //console.log("The current hour is " + measureHour +":00");
 
@@ -147,7 +144,8 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
 });
 
 }
-setInterval (setTime, 10000);
+setTime();
+setInterval (setTime, 10 * 60 * 1000);
 
  /*
 https://blog.logrocket.com/localstorage-javascript-complete-guide/
