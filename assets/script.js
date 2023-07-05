@@ -8,15 +8,17 @@
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
 
+    /*
         // Add a click event listener to the save button
         $('.saveBtn').on('click', function() {
           // Get the ID of the parent time-block
-          var hourID = $(this).closest('time-block').attr('id'); 
+          var hourID = $(this).closest('time-block').attr('id');
           // Get the user input from the textarea
-          var textarea = $(this).siblings('textarea').val();
+          var textareaFound = $(this).siblings('textarea').val();
+          var textarea = JSON.stringify(textareaFound);
           // Save the user input in local storage using the hourID as the key
           localStorage.setItem(hourID, textarea);
-        });
+      
       
         // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
 
@@ -27,19 +29,47 @@
 
          
           if (textarea) {
-            $(this).find('textarea').val(hourID);
-          
+           var findText = $(this).find('textarea').val(hourID);
+           console.log(findText);
+
           }
         });
-
-        $('lastReminder').on("click", function(){
-            var showReminder = ('reminderText');
-            showReminder.text("This is the latest reminder made :" + textarea + ". made at " + hourID);
-                // to write text on page from storage check Rocket Log video at 8:02 
-        });
+    });
         // Rest of your code...
-
-   
+*/
+           // Add a click event listener to the save button
+           $('.saveBtn').on('click', function() {
+            // Get the ID of the parent time-block
+            var hourTimeID = $(this).parent('time-block').attr('id').replace(/hour-/,'');
+            console.log(hourTimeID);
+            var hourID = JSON.stringify(hourTimeID);
+            // Get the user input from the textarea
+            var textareaFound = $(this).siblings('textarea').val();
+            var textarea = JSON.stringify(textareaFound);
+            // Save the user input in local storage using the hourID as the key
+            localStorage.setItem(hourID, textarea);
+            console.log(hourID);
+            console.log(textarea);
+        
+            });
+        
+          // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
+  
+          
+       $('.time-block').each(function() {
+            var hourID = $(this).attr('id');
+            var textarea = localStorage.getItem(hourID);
+  
+           
+            if (textarea) {
+             var findText = $(this).find('textarea').val(hourID);
+             console.log(findText);
+            /* $('lastReminder').on("click", function(){ 
+              var showReminder = ('reminderText');
+              showReminder.text("This is the latest reminder made :" + findText + ". made at " + hourID);
+              }); */
+            }
+          });
 
 
    //May consider clearing local storage using localtorage.clear
@@ -88,11 +118,11 @@ $('#meridiem').text(meridiem);
 function setTime(){
 
     var measureHour = dayjs().format('HH');
-    console.log("The current hour is " + measureHour +":00");
+    //console.log("The current hour is " + measureHour +":00");
 
     var timeBlock = $('.time-block');
 
-console.log(timeBlock);
+
 timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
 //console.log($(this));
  var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
@@ -105,7 +135,7 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
     $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
- } else if (intTimeHour === measureHour){
+ } else if (intTimeHour <= measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
@@ -117,7 +147,7 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
 });
 
 }
-setInterval (setTime, 150000);
+setInterval (setTime, 10000);
 
  /*
 https://blog.logrocket.com/localstorage-javascript-complete-guide/
@@ -209,22 +239,7 @@ https://www.youtube.com/@WebDevSimplified
     // TODO: Add code to display the current date in the header of the page.
  // });
 
- var timeBlock = $('.time-block');
 
- timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
-   //console.log($(this));
-    var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
-    var arrayTime = blockHour[1]; //grabs the first index of the array
-   // console.log(arrayTime, blockHour);
-   var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
-   //console.log(intTimeHour, measureHour);
-   console.log(intTimeHour);
-
-  localStorage.setItem('userInput', JSON.stringify({
-
-    
-
-  })
-  );
-
-})
+ $('clearBtn').on('click', function() {
+    localStorage.clear();
+    });
