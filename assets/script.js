@@ -8,13 +8,10 @@
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
 
-    $('saveBtn').on("click", function(){
-
-    $(function() {
         // Add a click event listener to the save button
         $('.saveBtn').on('click', function() {
           // Get the ID of the parent time-block
-          var hourID = $(this).closest('.time-block').attr('id'); // the closest method 
+          var hourID = $(this).closest('time-block').attr('id'); 
           // Get the user input from the textarea
           var textarea = $(this).siblings('textarea').val();
           // Save the user input in local storage using the hourID as the key
@@ -23,26 +20,28 @@
       
         // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
 
-        $('').on("click", function(){
-
-        $('.time-block').each(function() {
+        
+     $('.time-block').each(function() {
           var hourID = $(this).attr('id');
           var textarea = localStorage.getItem(hourID);
+
+         
           if (textarea) {
-            $(this).find('textarea').val(textarea);
-            var showReminder = ("<p>");
-            showReminder.append('reminderText').text("" + textarea);
-            showReminder.text("" + textarea);
+            $(this).find('textarea').val(hourID);
+          
           }
         });
-      
+
+        $('lastReminder').on("click", function(){
+            var showReminder = ('reminderText');
+            showReminder.text("This is the latest reminder made :" + textarea + ". made at " + hourID);
+                // to write text on page from storage check Rocket Log video at 8:02 
+        });
         // Rest of your code...
-      });
 
-    })
+   
 
 
-//});
    //May consider clearing local storage using localtorage.clear
 
     //HINT: What does `this` reference in the click listener

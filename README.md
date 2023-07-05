@@ -1,14 +1,14 @@
-# Ironage-Boar (Challenge-1)
+# past-present-and-future-spirit-schedule (Challenge-5)
 
 ## Description
 
-This files are created to complete the Module one challenge-1
+This files are created to complete the Module five challenge-5
 
-I want the client to have a proper marketing website that always can be easily edited at a moments notice.
+I want the client to have the ability to schedule for workers and set reminders
 
-Now the client should be able to navigate the HTML and CSS file with ease and edit more easily using the same class names.
+Now the client should be able to remember tasks and know what the current hour is
 
-I learned that there can be several elements in a class for CSS and that not all HTML tags can have the same class for CSS.
+I learned is Jquery is very good tool for short cuts and creating unique methods for data and appeance
 
 ## Table of Contents 
 
@@ -25,35 +25,29 @@ N/A
 
 ## Usage
 
-In this asignment we were taught to understand organized HTML structure, logical styling and positioning, and make sure all elements were in sequential order.
+In this asignment we were taught to understand Jquery and the potental for collecting data from user and making code shorter
 
-For the webpage a user can use the nav bar link, have sections and read alt attributes.
+![alttext](assets/images/Website.png)
 
-![alttext](assets/images/Webpage%20(top).png)
-
-![alttext](assets/images/Webpage%20(middle).png)
-
-![alttext](assets/images/Webpage%20(bottom).png)
 
 ## Credits
 
-Credit to W3schools.com for information and guidance on semantic HTML tags and image tags. (Tutorial)
+Credit to Coders media and The Trendliners for calling functions every second for setting clock (Tutorial)
 
-URL: https://www.w3schools.com/html/html5_semantic_elements.asp
+URL: https://www.youtube.com/watch?v=_CdXRD4eo6k&ab_channel=CodersMedia
+URL: https://www.youtube.com/watch?v=xZkG8BediLw&ab_channel=TheTrendliners
 
-Credit to Mmdnwebdocs.com for information and guidance on capabilities and demonstration of CSS specificity. (Tutorial)
+Credit to Rocket Log for local storage tutorial (Tutorial)
 
-URL: https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML
+URL: https://blog.logrocket.com/localstorage-javascript-complete-guide/
 
 ## License
 
-MIT Licence 
-
-URL: https://github.com/lcurtis0/challenge-1/blob/main/LICENSE
+N/A
 
 ## Deployment
 
-Evaluated environment url: https://lcurtis0.github.io/-Ironage-boar-Refraction-/
+Evaluated environment url: 
 
 ## Badges
 
