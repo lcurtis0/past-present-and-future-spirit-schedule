@@ -47,7 +47,7 @@ N/A
 
 ## Deployment
 
-Evaluated environment url: 
+Evaluated environment url: https://lcurtis0.github.io/past-present-and-future-spirit-schedule/
 
 ## Badges
 
