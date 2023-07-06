@@ -34,14 +34,19 @@ $(function () { //Large function wrap
                // $("#reminderText").empty();
                 var newHour;
                 var ampm;
-                if (hourID >= 12){
-                    newHour = hourID - 12;
+                hourRepl = hourID.replace("hour-",'');
+                hourPrint = parseInt(hourRepl);
+                if (hourPrint >= 12){
+                    newHour = hourPrint - 12;
+                    console.log("this is newHour" + hourPrint);
                     ampm = "PM";
-                } else if(hourID < 12){
+                    console.log("this is ampm");
+                } else if(hourPrint < 12){
                     newHour = hourID;
                     ampm = "AM";
                 }
-              $("#reminderText").append("<p> This reminder is to : " + textarea + ". To be done at " + newHour /*hourID.replace("hour-",'') */ + ":00" + ampm + "</p>" );
+                console.log(newHour, ampm, textarea, hourID);
+              $("#reminderText").append("<p> This reminder is to : " + textarea + ". To be done at " + newHour  + ":00" + ampm + "</p>" );
                 })
               }; 
             });
@@ -108,9 +113,10 @@ setInterval (setTime, 10 * 60 * 1000);
 
 // https://blog.logrocket.com/localstorage-javascript-complete-guide/
 
- $('clearBtn').click(function() {
+ $('#clearBtn').click(function() {
     
     localStorage.clear();
+    location.reload();
     });
 
 });
