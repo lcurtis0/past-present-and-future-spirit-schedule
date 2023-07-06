@@ -1,89 +1,48 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-// $(function () {
+$(function () {
 
     // TODO: Add a listener for click events on the save button. 
     //This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
 
-    //$('saveBtn').on("click", function(){
+
+           // Add a click event listener to the save button
+           $('.saveBtn').on('click', function() {
+            // Getting the ID of the parent time-block
+            var hourID = $(this).parent('.time-block').attr('id');
+            // Getting the user input from the textarea
+            var textarea = $(this).siblings('textarea').val();
+            // Save the user input in local storage using the hourID as the key
+            localStorage.setItem(hourID, textarea);
+            console.log(hourID);
+            console.log(textarea);
+        
+            });
+        
+          // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
+  
+          
+       $('.time-block').each(function() {
+            var hourID = $(this).attr('id');
+            var textarea = localStorage.getItem(hourID);
+           // console.log(hourID);
+  
+           
+            if (textarea) {
+             $(this).find('textarea').val(textarea);
+            
+            $('lastReminder').on("click", function(){ 
+                console.log(textarea);
+              $('reminderText').text = "This is the latest reminder made :" + textarea + ". made at " + $(this);
+              }); 
+            }
+          });
 
 
-   var userInfo =[
-    {
-        id:"1",
-        hourID:"9",
-        time: "9",
-        textarea:""
-    },
-    {
-        id:"2",
-        hourID:"10",
-        time: "10",
-        textarea:""
-    },
-    {
-        id:"3",
-        hourID:"11",
-        time: "11",
-        textarea:""
-    },
-    {
-        id:"4",
-        hourID:"12",
-        time: "12",
-        textarea:""
-    },
-    {
-        id:"5",
-        hourID:"1",
-        time: "13",
-        textarea:""
-    },
-    {
-        id:"6",
-        hourID:"2",
-        time: "14",
-        textarea:""
-    },
-    {
-        id:"7",
-        hourID:"3",
-        time: "15",
-        textarea:""
-    },
-    {        
-        id:"8",
-        hourID:"4",
-        time: "16",
-        textarea:""
-    },
-    {
-        id:"9",
-        hourID:"5",
-        time: "17",
-        textarea:""
-    }
-    
-   ]
 
-   function trackingHour() {
-    localStorage.setItem("What-user-wrote", JSON.stringify(userInfo.textarea));
-    localStorage.setItem("24-hour-time", JSON.parseInt(userInfo.time) );
-    localStorage.setItem("ID", JSON.parseInt(userInfo.id) );
-    } setInterval (trackingHour,15000);
-
-    function gettingHourInfo() {
-        localStorage.getItem("What-user-wrote");
-        localStorage.getItem("24-hour-time");
-        localStorage.getItem("ID");
-    }
-
-
-//});
-   //May consider clearing local storage using localtorage.clear
 
     //HINT: What does `this` reference in the click listener
     // function? -D
@@ -103,18 +62,6 @@
     // attribute of each time-block be used to conditionally add or remove the
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
-    
-
-
-
-
-
-
-
-
-
-
-
 
 function displayClock(){
 
@@ -139,13 +86,12 @@ $('#meridiem').text(meridiem);
 
 
 function setTime(){
-
     var measureHour = dayjs().format('HH');
-    console.log("The current hour is " + measureHour +":00");
+    //console.log("The current hour is " + measureHour +":00");
 
     var timeBlock = $('.time-block');
 
-console.log(timeBlock);
+
 timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
 //console.log($(this));
  var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
@@ -155,10 +101,10 @@ var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
 //console.log(intTimeHour, measureHour);
 
 if (intTimeHour < measureHour){ // intTimerHour represntes the index of each number in the id and compares it. Since were using the the 24 hour clock it roates through out the day
-    $(this).removeClass('present');// The "this" grabs the whole div not just the class
+    $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
- } else if (intTimeHour === measureHour){
+ } else if (intTimeHour = measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
@@ -170,12 +116,11 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
 });
 
 }
-setInterval (setTime, 150000);
+setTime();
+setInterval (setTime, 10 * 60 * 1000);
 
  /*
 https://blog.logrocket.com/localstorage-javascript-complete-guide/
-https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
-https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
 https://www.youtube.com/@WebDevSimplified
 
 });
@@ -202,57 +147,6 @@ https://www.youtube.com/@WebDevSimplified
  // timeCheck is a function that will be played out for each class hour
 
 
-/*
-    Algorithm setTime()
-  
-    Begin
-      // Get the current hour using a date library
-      Set currentHour to current hour of the day
-  
-      Display "The current hour is" followed by the value of currentHour
-  
-      // For each element with class 'time-block'
-      For each 'time-block' element as block do
-  
-          // Get the hour value from the element's ID,
-           assuming it's the second part when splitting by '-'
-
-          Set blockHour to the second part of the block's ID after splitting by '-'
-  
-          // Parse blockHour to an integer
-          Convert blockHour to an integer
-  
-          // Convert blockHour to 24-hour format if it's less than 9
-          If blockHour is less than 9 then
-              Add 12 to blockHour
-          End if
-  
-          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
-          If blockHour is less than currentHour then
-              Remove classes 'future' and 'present' from block
-              Add class 'past' to block
-          Else If blockHour is equal to currentHour then
-              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
-              Remove classes 'future' and 'past' from block
-              Add class 'present' to block
-          Else
-              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
-              Remove classes 'present' and 'past' from block
-              Add class 'future' to block
-          End if
-  
-      End for
-  
-    End
-    
-    // Run setTime every minute
-    Repeat setTime every 60 seconds
-  
-  End Algorithm
-
-  Note that this code assumes that you're using a 24-hour clock, where hours go from 0 (midnight) to 23. This is the default for JavaScript's Date object, as well as for dayjs. It also assumes that your hour blocks start from 9 AM and go to 5 PM, in which case you would need to convert the block hour to a 24-hour format.
-
-     */
 
 
     // TODO: Add code to get any user input that was saved in localStorage and set
@@ -262,32 +156,9 @@ https://www.youtube.com/@WebDevSimplified
     // TODO: Add code to display the current date in the header of the page.
  // });
 
- var timeBlock = $('.time-block');
 
- timeBlock.each(function() { //each is jqueury method used to loop through all DOM elements
-   //console.log($(this));
-    var blockHour = $(this).attr("id").split("-")// attribute can grab id or class and the split creates an array with two indexs
-    var arrayTime = blockHour[1]; //grabs the first index of the array
-   // console.log(arrayTime, blockHour);
-   var intTimeHour = parseInt(arrayTime);// Converts String to Int from index
-   //console.log(intTimeHour, measureHour);
-   console.log(intTimeHour);
+ $('clearBtn').on('click', function() {
+    localStorage.clear();
+    });
 
-  localStorage.setItem('userInput', JSON.stringify({
-
-    
-
-  })
-  );
-
-})
-
-
-  var textByUser = $('textarea[class="description1"]');
-  console.log('First Name:', textByUser.val());
-  console.log("This is a text to see if text works :" + textByUser);
-  $('saveBtn').on("click", function(){
-
-      console.log("Hello");
-     // localstorage.setItem('reminder', JSON.stringify({ "text": }))
-  });
+});
