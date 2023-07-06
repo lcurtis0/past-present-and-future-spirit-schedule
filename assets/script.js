@@ -28,18 +28,31 @@ $(function () {
        $('.time-block').each(function() {
             var hourID = $(this).attr('id');
             var textarea = localStorage.getItem(hourID);
-           // console.log(hourID);
+
+            var meridiem = dayjs().format('A');
+            $('#meridiem').text(meridiem);
+
+            var Hour = dayjs().format('HH');
+
+
+
+           //console.log(hourID);
   
            
             if (textarea) {
              $(this).find('textarea').val(textarea);
             
-            $('lastReminder').on("click", function(){ 
-                console.log(textarea);
-              $('reminderText').text = "This is the latest reminder made :" + textarea + ". made at " + $(this);
-              }); 
-            }
-          });
+            $("#lastReminder").click(function(){ 
+                if (hourID >= 12){
+                    var newHour = hourID - 12;
+                    var ampm = "PM";
+                } else if(hourID < 12){
+                    ampm = "AM";
+                }
+              $("#reminderText").append("<p> This is the latest reminders made : " + textarea + ". made at " + newHour /*hourID.replace("hour-",'') */+ ":00" + ampm + "</p>" );
+                })
+              }; 
+            });
 
 
 
@@ -104,7 +117,7 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
     $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
- } else if (intTimeHour = measureHour){
+ } else if (intTimeHour <= measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
@@ -157,7 +170,8 @@ https://www.youtube.com/@WebDevSimplified
  // });
 
 
- $('clearBtn').on('click', function() {
+ $('clearBtn').click (function() {
+    
     localStorage.clear();
     });
 
