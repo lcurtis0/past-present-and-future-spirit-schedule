@@ -75,4 +75,6 @@ body {
     background-color: #55b855;
     color: white;
   }
-
+  .saveBtn:hover {
+    background-color: #0fc2eb;
+  }
