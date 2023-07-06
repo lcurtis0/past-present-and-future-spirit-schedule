@@ -1,13 +1,7 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
 
-    // TODO: Add a listener for click events on the save button. 
-    //This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. 
 
+
+$(function () { //Large function wrap
 
            // Add a click event listener to the save button
            $('.saveBtn').on('click', function() {
@@ -28,40 +22,31 @@ $(function () {
        $('.time-block').each(function() {
             var hourID = $(this).attr('id');
             var textarea = localStorage.getItem(hourID);
-           // console.log(hourID);
+
+           //console.log(hourID);
   
            
             if (textarea) {
              $(this).find('textarea').val(textarea);
             
-            $('lastReminder').on("click", function(){ 
-                console.log(textarea);
-              $('reminderText').text = "This is the latest reminder made :" + textarea + ". made at " + $(this);
-              }); 
-            }
-          });
+            $("#lastReminder").click(function(){ 
+                console.log("New latest reminder made");
+               // $("#reminderText").empty();
+                var newHour;
+                var ampm;
+                if (hourID >= 12){
+                    newHour = hourID - 12;
+                    ampm = "PM";
+                } else if(hourID < 12){
+                    newHour = hourID;
+                    ampm = "AM";
+                }
+              $("#reminderText").append("<p> This reminder is to : " + textarea + ". To be done at " + newHour /*hourID.replace("hour-",'') */ + ":00" + ampm + "</p>" );
+                })
+              }; 
+            });
 
 
-
-
-    //HINT: What does `this` reference in the click listener
-    // function? -D
-
-    // How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked?  -D
-    
-    //How might the id be
-    // useful when saving the description in local storage?
-
-//});
-
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. 
-    
-    //HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
 
 function displayClock(){
 
@@ -104,7 +89,7 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
     $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
- } else if (intTimeHour = measureHour){
+ } else if (intTimeHour <= measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
@@ -119,45 +104,12 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
 setTime();
 setInterval (setTime, 10 * 60 * 1000);
 
- /*
-https://blog.logrocket.com/localstorage-javascript-complete-guide/
-https://www.youtube.com/@WebDevSimplified
+ 
 
-});
-    for (i=9; i <= 17; i++){
-        console.log(i, timeBlock);
-        if (i > measureHour){
-           timeBlock.removeClass('present');
-            timeBlock.removeClass('future');
-            timeBlock.addClass('past');
-        } else if (i === measureHour){
-            timeBlock.removeClass('past');
-            timeBlock.removeClass('future');
-            timeBlock.addClass('present');
-        } else if (i < measureHour ){
-            timeBlock.removeClass('past');
-            timeBlock.removeClass('present');
-            timeBlock.addClass('future'); // the future will act as a default after 5PM because everything after is the following day in the future 
-        }
-        */
+// https://blog.logrocket.com/localstorage-javascript-complete-guide/
+
+ $('clearBtn').click(function() {
     
-
-
-
- // timeCheck is a function that will be played out for each class hour
-
-
-
-
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
- // });
-
-
- $('clearBtn').on('click', function() {
     localStorage.clear();
     });
 

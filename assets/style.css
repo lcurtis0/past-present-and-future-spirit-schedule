@@ -61,10 +61,18 @@ body {
   /*-----------------------------------------------------*/
   /* VV This is my code VV */
 
-  /*Plan of attack:
-  To designate each hour past, present and future class we must
-  implement the class via Jquery. 
-  The J query will know each hour by knowing the current hour on a clock
+  .past:hover {
+    background-color: #979090;
+    color: white;
+  }
   
-*/
+  .present:hover {
+    background-color: #eb4941;
+    color: white;
+  }
+  
+  .future:hover {
+    background-color: #55b855;
+    color: white;
+  }
 
