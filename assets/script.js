@@ -1,47 +1,19 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-// $(function () {
+$(function () {
 
     // TODO: Add a listener for click events on the save button. 
     //This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. 
 
-    /*
-        // Add a click event listener to the save button
-        $('.saveBtn').on('click', function() {
-          // Get the ID of the parent time-block
-          var hourID = $(this).closest('time-block').attr('id');
-          // Get the user input from the textarea
-          var textareaFound = $(this).siblings('textarea').val();
-          var textarea = JSON.stringify(textareaFound);
-          // Save the user input in local storage using the hourID as the key
-          localStorage.setItem(hourID, textarea);
-      
-      
-        // Retrieve the saved user inputs from local storage and set the values of the corresponding textarea elements
 
-        
-     $('.time-block').each(function() {
-          var hourID = $(this).attr('id');
-          var textarea = localStorage.getItem(hourID);
-
-         
-          if (textarea) {
-           var findText = $(this).find('textarea').val(hourID);
-           console.log(findText);
-
-          }
-        });
-    });
-        // Rest of your code...
-*/
            // Add a click event listener to the save button
            $('.saveBtn').on('click', function() {
-            // Get the ID of the parent time-block
+            // Getting the ID of the parent time-block
             var hourID = $(this).parent('.time-block').attr('id');
-            // Get the user input from the textarea
+            // Getting the user input from the textarea
             var textarea = $(this).siblings('textarea').val();
             // Save the user input in local storage using the hourID as the key
             localStorage.setItem(hourID, textarea);
@@ -56,21 +28,21 @@
        $('.time-block').each(function() {
             var hourID = $(this).attr('id');
             var textarea = localStorage.getItem(hourID);
-            console.log(hourID);
+           // console.log(hourID);
   
            
             if (textarea) {
              $(this).find('textarea').val(textarea);
             
             $('lastReminder').on("click", function(){ 
-              var showReminder = ('reminderText');
-              showReminder.text("This is the latest reminder made :" + findText + ". made at " + hourID);
+                console.log(textarea);
+              $('reminderText').text = "This is the latest reminder made :" + textarea + ". made at " + $(this);
               }); 
             }
           });
 
 
-   //May consider clearing local storage using localtorage.clear
+
 
     //HINT: What does `this` reference in the click listener
     // function? -D
@@ -132,7 +104,7 @@ if (intTimeHour < measureHour){ // intTimerHour represntes the index of each num
     $(this).removeClass('present');// "this" grabs the whole div not just the class and asigns whatever methods given
     $(this).removeClass('future');
     $(this).addClass('past');
- } else if (intTimeHour <= measureHour){
+ } else if (intTimeHour = measureHour){
     $(this).removeClass('past');
     $(this).removeClass('future');
     $(this).addClass('present');
@@ -149,8 +121,6 @@ setInterval (setTime, 10 * 60 * 1000);
 
  /*
 https://blog.logrocket.com/localstorage-javascript-complete-guide/
-https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem
-https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem
 https://www.youtube.com/@WebDevSimplified
 
 });
@@ -177,57 +147,6 @@ https://www.youtube.com/@WebDevSimplified
  // timeCheck is a function that will be played out for each class hour
 
 
-/*
-    Algorithm setTime()
-  
-    Begin
-      // Get the current hour using a date library
-      Set currentHour to current hour of the day
-  
-      Display "The current hour is" followed by the value of currentHour
-  
-      // For each element with class 'time-block'
-      For each 'time-block' element as block do
-  
-          // Get the hour value from the element's ID,
-           assuming it's the second part when splitting by '-'
-
-          Set blockHour to the second part of the block's ID after splitting by '-'
-  
-          // Parse blockHour to an integer
-          Convert blockHour to an integer
-  
-          // Convert blockHour to 24-hour format if it's less than 9
-          If blockHour is less than 9 then
-              Add 12 to blockHour
-          End if
-  
-          // If blockHour is less than currentHour, remove 'future' and 'present' class, add 'past' class
-          If blockHour is less than currentHour then
-              Remove classes 'future' and 'present' from block
-              Add class 'past' to block
-          Else If blockHour is equal to currentHour then
-              // If blockHour is the current hour, remove 'future' and 'past' class, add 'present' class
-              Remove classes 'future' and 'past' from block
-              Add class 'present' to block
-          Else
-              // If blockHour is greater than currentHour, remove 'present' and 'past' class, add 'future' class
-              Remove classes 'present' and 'past' from block
-              Add class 'future' to block
-          End if
-  
-      End for
-  
-    End
-    
-    // Run setTime every minute
-    Repeat setTime every 60 seconds
-  
-  End Algorithm
-
-  Note that this code assumes that you're using a 24-hour clock, where hours go from 0 (midnight) to 23. This is the default for JavaScript's Date object, as well as for dayjs. It also assumes that your hour blocks start from 9 AM and go to 5 PM, in which case you would need to convert the block hour to a 24-hour format.
-
-     */
 
 
     // TODO: Add code to get any user input that was saved in localStorage and set
@@ -241,3 +160,5 @@ https://www.youtube.com/@WebDevSimplified
  $('clearBtn').on('click', function() {
     localStorage.clear();
     });
+
+});
